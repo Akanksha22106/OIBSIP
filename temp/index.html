@@ -1,1 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+    <meta charset="UTF-8">
+    <title>Temperature Converter</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            height: 100vh;
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .card {
+            width: 380px;
+            padding: 35px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            color: white;
+        }
+
+        .card h1 {
+            text-align: center;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            text-align: center;
+            font-size: 14px;
+            opacity: 0.85;
+            margin-bottom: 25px;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 12px;
+            border-radius: 10px;
+            border: none;
+            outline: none;
+            font-size: 15px;
+        }
+
+        input {
+            background: #ffffff;
+        }
+
+        select {
+            background: #f1f1f1;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #ffb703, #fb8500);
+            color: #000;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 183, 3, 0.5);
+        }
+
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .error {
+            margin-top: 10px;
+            text-align: center;
+            color: #ff6b6b;
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="card">
+        <h1>🌡️ Temp Converter</h1>
+        <p>Convert between Celsius, Fahrenheit & Kelvin</p>
+
+        <div class="input-group">
+            <input type="text" id="tempInput" placeholder="Enter temperature">
+        </div>
+
+        <div class="input-group">
+            <select id="unit">
+                <option value="celsius">Celsius (°C)</option>
+                <option value="fahrenheit">Fahrenheit (°F)</option>
+                <option value="kelvin">Kelvin (K)</option>
+            </select>
+        </div>
+
+        <button onclick="convertTemp()">Convert</button>
+
+        <div class="result" id="result">Converted value will appear here</div>
+        <div class="error" id="error"></div>
+    </div>
+
+    <script>
+        function convertTemp() {
+            const temp = document.getElementById("tempInput").value;
+            const unit = document.getElementById("unit").value;
+            const result = document.getElementById("result");
+            const error = document.getElementById("error");
+
+            error.innerHTML = "";
+            result.innerHTML = "Converted value will appear here";
+
+            if (temp === "" || isNaN(temp)) {
+                error.innerHTML = "⚠️ Please enter a valid number";
+                return;
+            }
+
+            let t = parseFloat(temp);
+            let output = "";
+
+            if (unit === "celsius") {
+                output = `${((t * 9 / 5) + 32).toFixed(2)} °F<br>${(t + 273.15).toFixed(2)} K`;
+            }
+            else if (unit === "fahrenheit") {
+                let c = (t - 32) * 5 / 9;
+                output = `${c.toFixed(2)} °C<br>${(c + 273.15).toFixed(2)} K`;
+            }
+            else {
+                let c = t - 273.15;
+                output = `${c.toFixed(2)} °C<br>${((c * 9 / 5) + 32).toFixed(2)} °F`;
+            }
+
+            result.innerHTML = output;
+        }
+    </script>
+
+</body>
+
+</html>
